@@ -17,7 +17,6 @@ import datetime
 import glob
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
 #如果以上沒import成功 代表沒安裝過 利用網路資源或是pip install 安裝巴
 import sys
 import os
@@ -47,8 +46,8 @@ K.set_image_data_format('channels_first')
 ###############################################################
 # Training Data List Creat
 ###############################################################
-train_real_data_dir = r'.\Training\Real\*'
-train_white_data_dir = r'.\Training\White\*'
+train_real_data_dir = './Training/Real/*'
+train_white_data_dir = './Training/White/*'
 
 real_list = glob.glob(train_real_data_dir)
 train_real_data_list = []
@@ -258,13 +257,13 @@ def generator_training_Img(real_list_dir,white_list_dir,resize=None,batch_size=3
 #你要Random我也是沒差拉 
 
 batch_size=128
-all_epoch=5
+all_epoch=3000
 #這邊是在定義答案 valid(Real)是1 fake是0 
 #size當然是『D的輸出Size』囉
 #2018.05.04補充：如果你是直接Dense成1維輸出的大小，就只要定義(batch_size,1)就可以了
 #因為註解寫了答案 所以填入你的答案巴 
 #別懷疑 是四維的 你如果要改成三維 上面的網路架構不會符合這種輸入 你可能需要對網路架構Reshape之類的動作
-valid = np.zeros((batch_size,channels,8,8))
+valid = np.ones((batch_size,channels,8,8))
 fake  = np.zeros((batch_size,channels,8,8))
 
 #純粹紀錄時間    
@@ -346,7 +345,7 @@ def numpy_to_csv(input_image,image_number=10,save_csv_name='predict.csv'):
     print("Okay! numpy_to_csv")
 
 
-test_data_dir=r'.\Test\White\*' 
+test_data_dir=r'./Test/White/*' 
 test_data_dir_list=glob.glob(test_data_dir)
 test_data_list=[]
 test_data_list.extend(test_data_dir_list)
